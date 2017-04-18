@@ -1,27 +1,10 @@
 import React, { Component } from 'react';
-import RecipesList from './RecipesList';
-import AddNew from './AddNew';
+import Latest from './Latest';
+import CreateRecipe from './CreateRecipe';
+import ViewRecipes from './ViewRecipes';
+import Main from './Main';
 import { Colors } from '../constants/constants';
-import { Router, Route, browserHistory } from 'react-router';
-
-const styles = {
-    page: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: Colors.PURPLE_LIGHT,
-        paddingLeft: 10,
-        paddingRight: 10
-    },
-    title: {
-        fontSize: 40,
-        fontFamily: 'calibri',
-        color: Colors.WHITE,
-        marginTop: 40,
-        marginBottom: 80
-    }
-};
+import { IndexRoute, Router, Route, browserHistory } from 'react-router';
 
 class AppRouter extends Component {
     constructor(props) {
@@ -29,24 +12,30 @@ class AppRouter extends Component {
         props.actions.loadRecipes();
     }
     render() {
-        let ordered = this.props.storeState.recipes.latest.sort(
-            (a, b) => b.date - a.date
-        );
         return (
-            <div style={styles.page}>
-                <div>
-                    <h1 style={styles.title}>Recipes App</h1>
-                </div>
-                <Router key={Math.random()} history={browserHistory}>
-                    <Route path="/add" component={AddNew} />
-                    <Route
-                        path="/(:id)"
-                        items={ordered}
+            <Router key={Math.random()} history={browserHistory}>
+                <Route path="/" component={Main}>
+                    <IndexRoute
+                        recipes={this.props.storeState.recipes.latest}
                         deleteRecipe={this.props.actions.deleteRecipe}
-                        component={RecipesList}
+                        component={Latest}
+                        title={'Latest recipes'}
                     />
-                </Router>
-            </div>
+                    <Route
+                        addNewRecipe={this.props.actions.addNewRecipe}
+                        path="/add"
+                        component={CreateRecipe}
+                        title={'Add new recipe'}
+                    />
+                    <Route
+                        recipes={this.props.storeState.recipes.all}
+                        updateRecipe={this.props.actions.updateRecipe}
+                        path="/(:id)"
+                        component={ViewRecipes}
+                        title={'Recipe'}
+                    />
+                </Route>
+            </Router>
         );
     }
 }

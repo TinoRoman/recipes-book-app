@@ -11,3 +11,10 @@ export const Colors = {
     GREY: '#A58FB1',
     BLACK: '#000000'
 };
+
+export const ActionTypes = {
+    RECIPES_LOADED: 'RECIPES_LOADED',
+    RECIPE_DELETED: 'RECIPE_DELETED',
+    RECIPE_ADDED: 'RECIPE_ADDED',
+    RECIPE_UPDATED: 'RECIPE_UPDATED'
+};

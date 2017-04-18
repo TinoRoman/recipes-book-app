@@ -64,16 +64,18 @@ class Recipe extends React.Component {
                 <div style={styles.title}>
                     <div style={styles.name}>{this.props.name}</div>
                     <div>
-                        <Link to={`/${this.props.id}`}>
-                            <FontAwesome style={styles.icon} name="pencil" />
-                        </Link>
-                        <FontAwesome
-                            onClick={() =>
-                                confirm('Are you sure you want to delete') &&
-                                this.props.deleteRecipe(this.props.id)}
-                            style={styles.icon}
-                            name="times"
-                        />
+                        {this.props.canEdit &&
+                            <Link to={`/${this.props.id}`}>
+                                <FontAwesome style={styles.icon} name="pencil" />
+                            </Link>}
+                        {this.props.canDelete &&
+                            <FontAwesome
+                                onClick={() =>
+                                    confirm('Are you sure you want to delete') &&
+                                    this.props.deleteRecipe(this.props.id)}
+                                style={styles.icon}
+                                name="times"
+                            />}
                     </div>
                 </div>
                 <div style={styles.description}>
@@ -92,7 +94,9 @@ Recipe.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     date: PropTypes.number.isRequired,
-    latest: PropTypes.bool
+    latest: PropTypes.bool,
+    canEdit: PropTypes.bool,
+    canDetele: PropTypes.bool
 };
 
 export default Recipe;
