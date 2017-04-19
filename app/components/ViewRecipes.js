@@ -11,7 +11,9 @@ class ViewRecipes extends Component {
     render() {
         let { recipes, updateRecipe } = this.props.route;
         let id = this.props.routeParams.id;
-        let previous = recipes.filter(_ => _.id === id && !_.latest);
+        let previous = recipes
+            .filter(_ => _.id === id && !_.latest)
+            .sort((a, b) => b.date - a.date);
         let current = recipes.find(_ => _.id === id && _.latest);
         return (
             <div>
